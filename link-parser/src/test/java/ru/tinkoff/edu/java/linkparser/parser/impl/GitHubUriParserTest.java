@@ -31,15 +31,15 @@ public class GitHubUriParserTest {
 
     @Test
     public void parse_shouldReturnUserAndRepoForCorrectUrl() {
-        var expected = new GitHubUriParserAnswer(new UserAndRepo("VladimirZaitsev21", "some-repo"));
-        var actual = instance.parse("https://github.com/VladimirZaitsev21/some-repo");
+        var expected = new GitHubUriParserAnswer(new UserAndRepo("some-user", "some-repo"));
+        var actual = instance.parse("https://github.com/some-user/some-repo");
         assertEquals(expected, actual);
         verifyNoInteractions(mock);
     }
 
     @Test
     public void parse_shouldReturnNullForIncorrectGitHubLink() {
-        var actual = instance.parse("https://github.com/VladimirZaitsev21");
+        var actual = instance.parse("https://github.com/some-user");
         assertEquals(new NotMatchedUriParserAnswer(), actual);
         verifyNoInteractions(mock);
     }
@@ -61,6 +61,6 @@ public class GitHubUriParserTest {
 
     @Test
     public void parse_shouldReturnNullForMalformedUrl() {
-        assertNull(instance.parse("http://github.com/VladimirZaitsev21/some-repo java"));
+        assertNull(instance.parse("http://github.com/some-user/some-repo java"));
     }
 }

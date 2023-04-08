@@ -35,15 +35,15 @@ public class UriParsersChainTest {
     public static Stream<Arguments> getArgumentsForDoParseTest() {
         return Stream.of(
                 Arguments.of(
-                    "https://github.com/VladimirZaitsev21/some-repo",
-                    new GitHubUriParserAnswer(new UserAndRepo("VladimirZaitsev21", "some-repo"))
+                    "https://github.com/some-user/some-repo",
+                    new GitHubUriParserAnswer(new UserAndRepo("some-user", "some-repo"))
                 ),
                 Arguments.of(
                     "https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c",
                     new StackOverflowUriParserAnswer(1642028)
                 ),
                 Arguments.of(
-                    "https://github.com/VladimirZaitsev21?tab=repositories",
+                    "https://github.com/some-user?tab=repositories",
                     new NotMatchedUriParserAnswer()
                 ),
                 Arguments.of(
@@ -51,7 +51,7 @@ public class UriParsersChainTest {
                     new NotMatchedUriParserAnswer()
                 ),
                 Arguments.of(
-                    "https://bitbucket.org/VladimirZaitsev21/some-repo",
+                    "https://bitbucket.org/some-user/some-repo",
                     null
                 ),
                 Arguments.of(

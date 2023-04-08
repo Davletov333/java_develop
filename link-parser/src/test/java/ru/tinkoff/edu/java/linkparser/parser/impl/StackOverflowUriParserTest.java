@@ -47,7 +47,7 @@ public class StackOverflowUriParserTest {
     public void parse_shouldSkipParsingForWrongAuthority() {
         var expected = new StackOverflowUriParserAnswer(1642028);
         when(mock.parse(anyString())).thenReturn(expected);
-        var actual = instance.parse("https://github.com/VladimirZaitsev21/some-repo");
+        var actual = instance.parse("https://github.com/some-user/some-repo");
         assertEquals(expected, actual);
         verify(mock, times(1)).parse(anyString());
     }
