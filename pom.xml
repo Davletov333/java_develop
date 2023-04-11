@@ -22,6 +22,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-boot.version>3.0.1</spring-boot.version>
+        <testcontainers.version>1.17.6</testcontainers.version>
         <log4j.version>2.17.1</log4j.version>
         <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
         <jetbrains-annotations.version>23.1.0</jetbrains-annotations.version>
@@ -71,6 +72,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -87,7 +95,6 @@
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi.version}</version>
             </dependency>
-
 
             <dependency>
                 <groupId>org.jetbrains</groupId>
