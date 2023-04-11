@@ -1,40 +1,41 @@
-version: "3"
+version: "1"
 
 services:
-  postgresql:
-    image: postgres:15
+  postgres:
+    container_name: postgres
+    image: postgres:14
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=scrapper
-    ports: 
-      - "5432:5432"
+      POSTGRES_USER: postgre_user
+      POSTGRES_DB: scrapper
+      POSTGRES_PASSWORD: postgre_password
     volumes:
-      - ./migrations/pg-data:/var/lib/postgresql/data/
-    healthcheck:
-      test: /usr/bin/pg_isready
-      interval: 5s
-      timeout: 10s
-      retries: 120
+      - ./migrations/postgre_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - backend
 
   liquibase-migrations:
+    container_name: liquibase
     image: liquibase/liquibase:4.18
-    depends_on:
-      postgresql:
-        condition: service_healthy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 25s
+        max_attempts: 25
     command:
       - --hub-mode=off
       - --changelog-file=master.xml
       - --driver=org.postgresql.Driver
-      - --url=jdbc:postgresql://postgresql:5432/scrapper
-      - --username=root
-      - --password=root
+      - --url=jdbc:postgresql://postgres:5432/scrapper
+      - --username=postgre_user
+      - --password=postgre_password
       - update
     volumes:
       - ./migrations:/liquibase/changelog
     networks:
       - backend
+
 networks:
   backend:
+    driver: bridge
