@@ -5,9 +5,9 @@ services:
     container_name: postgres
     image: postgres:14
     environment:
-      POSTGRES_USER: postgre_user
+      POSTGRES_USER: root
       POSTGRES_DB: scrapper
-      POSTGRES_PASSWORD: postgre_password
+      POSTGRES_PASSWORD: root
     volumes:
       - ./migrations/postgre_data:/var/lib/postgresql/data
     ports:
@@ -28,8 +28,8 @@ services:
       - --changelog-file=master.xml
       - --driver=org.postgresql.Driver
       - --url=jdbc:postgresql://postgres:5432/scrapper
-      - --username=postgre_user
-      - --password=postgre_password
+      - --username=root
+      - --password=root
       - update
     volumes:
       - ./migrations:/liquibase/changelog
