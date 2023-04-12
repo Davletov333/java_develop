@@ -1,15 +1,15 @@
-version: "1"
+version: '10'
 
 services:
   postgres:
     container_name: postgres
-    image: postgres:14
+    image: postgres
     environment:
-      POSTGRES_USER: root
       POSTGRES_DB: scrapper
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: post_user
+      POSTGRES_PASSWORD: post_pass
     volumes:
-      - ./migrations/postgre_data:/var/lib/postgresql/data
+      - ./migrations/postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -17,19 +17,20 @@ services:
 
   liquibase-migrations:
     container_name: liquibase
-    image: liquibase/liquibase:4.18
+    image: liquibase/liquibase
     deploy:
       restart_policy:
         condition: on-failure
-        delay: 25s
-        max_attempts: 25
+        delay: 10s
+        max_attempts: 10
     command:
       - --hub-mode=off
       - --changelog-file=master.xml
       - --driver=org.postgresql.Driver
       - --url=jdbc:postgresql://postgres:5432/scrapper
-      - --username=root
-      - --password=root
+      - --username=post_user
+      - --password=post_pass
+      - --logLevel=debug
       - update
     volumes:
       - ./migrations:/liquibase/changelog

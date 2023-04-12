@@ -46,4 +46,19 @@ public class LiquibaseMigrationsTest extends IntegrationEnvironment {
         connection.close();
         POSTGRESQL_CONTAINER.stop();
     }
+
+    @Test
+    public void testInsert() throws SQLException {
+        var preparedStatement = connection.createStatement();
+        var updateResult = preparedStatement.executeUpdate("INSERT INTO app.chats(tg_chat_id, nickname) VALUES (1, 'user')");
+
+        var statement = connection.createStatement();
+        var rs = statement.executeQuery("SELECT * FROM app.chats");
+        rs.next();
+        assertAll(
+                () -> assertEquals(1, updateResult),
+                () -> assertEquals(1L, rs.getLong(1)),
+                () -> assertEquals("user", rs.getString(2))
+        );
+    }
 }
